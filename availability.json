@@ -28,5 +28,45 @@
         ],
         "saturday": [],
         "sunday": []
+    },
+    "anto2": {
+        "monday": [
+            "evening"
+        ],
+        "tuesday": [
+            "afternoon"
+        ],
+        "wednesday": [],
+        "thursday": [],
+        "friday": [],
+        "saturday": [],
+        "sunday": []
+    },
+    "anto3": {
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [
+            "morning"
+        ],
+        "thursday": [],
+        "friday": [],
+        "saturday": [],
+        "sunday": []
+    },
+    "anto4": {
+        "monday": [
+            "evening"
+        ],
+        "tuesday": [],
+        "wednesday": [],
+        "thursday": [
+            "morning",
+            "afternoon"
+        ],
+        "friday": [
+            "evening"
+        ],
+        "saturday": [],
+        "sunday": []
     }
 }

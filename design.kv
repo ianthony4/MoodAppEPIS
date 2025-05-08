@@ -34,12 +34,12 @@
 				background_color:1,1,1,0
 				opacity:1 if self.state == 'normal' else 0.5
 				color:0.1,0.7,1,1
-				text:"Forgot password?"
+				text:"Olvidaste la Contraseña?"
 			Button:
 				background_color:1,1,1,0
 				opacity:1 if self.state == 'normal' else 0.5
 				color:0.1,0.7,1,1
-				text:"Sign Up"
+				text:"Registrate"
 				on_press: root.sign_up()
 
 <LoginSuccessScreen>:
@@ -78,7 +78,8 @@
             on_press: root.manager.current = "schedule_screen"
 		Button:
     		text: "Ver mejor horario votado"
-    		on_press: root.show_best_time()
+    		# on_press: root.show_best_time() Anterior
+			on_press: root.manager.current = "results_screen"
         Button:
             text: "Cerrar sesión"
             on_press: root.logout()
@@ -95,11 +96,11 @@
 			text:"Sign up here"
 		TextInput:
 			id: username
-			hint_text:"Username"
+			hint_text:"Usuario"
 			size_hint:0.3,0.5
 		TextInput:
 			id: password
-			hint_text:"Password"
+			hint_text:"Constraseña"
 			size_hint:0.3,0.5
 		RelativeLayout:
 			Button:
@@ -217,6 +218,25 @@
             on_press:
                 root.manager.current = "login_success"
 
+<ResultsScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: "Gráfico de disponibilidad"
+            font_size: 20
+            size_hint_y: None
+            height: 40
+
+        BoxLayout:
+            id: graph_box
+		Button:
+            text: "Volver al menú principal"
+            size_hint_y: None
+            height: 50
+            on_press: root.manager.current = "login_success"
 
 <RootWidget>:
 	LoginScreen:
@@ -229,4 +249,6 @@
 		name:"sign_up_success"
 	ScheduleScreen:
     	name: "schedule_screen"
+	ResultsScreen:
+		name: "results_screen"
 

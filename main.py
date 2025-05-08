@@ -3,11 +3,15 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.image import Image
 from kivy.uix.behaviors import ButtonBehavior
+# Para el anuncio emergente
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
 
 from json.decoder import JSONDecodeError
 from datetime import datetime
 import json, glob, random
 from pathlib import Path
+from results_screen import ResultsScreen # Para la grafica
 
 # For button-hover feature
 from hoverable import HoverBehavior
@@ -100,6 +104,13 @@ class SignupSuccessScreen(Screen):
         self.manager.current = "login_screen"
 
 class ScheduleScreen(Screen):
+
+    def show_popup(self, message):
+        popup = Popup(title='Aviso',
+            content=Label(text=message),
+            size_hint=(None, None),
+            size=(400, 200))
+        popup.open()
     
     def save_availability(self,
                           mon_morn, mon_aft, mon_eve,
@@ -129,6 +140,7 @@ class ScheduleScreen(Screen):
             data = {}
 
         if username in data:
+            self.show_popup("Ya has enviado tu disponibilidad.\nSolo puedes votar una vez.")
             print(f"[INFO] Usuario '{username}' ya ha votado.")
             return 
 
@@ -136,7 +148,8 @@ class ScheduleScreen(Screen):
 
         with open("availability.json", "w") as file:
             json.dump(data, file, indent=4)
-
+            
+        self.show_popup("¡Tu disponibilidad ha sido registrada con éxito!")
         print(f"[INFO] Disponibilidad de '{username}' guardada correctamente.")
         self.manager.current = "login_success"  # o a una pantalla de confirmación
 
