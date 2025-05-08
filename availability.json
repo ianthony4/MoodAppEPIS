@@ -68,5 +68,16 @@
         ],
         "saturday": [],
         "sunday": []
+    },
+    "anto7": {
+        "Lunes": [],
+        "Martes": [],
+        "Miercoles": [
+            "Ma\u00f1ana"
+        ],
+        "Jueves": [],
+        "Viernes": [],
+        "Sabado": [],
+        "Domingo": []
     }
 }

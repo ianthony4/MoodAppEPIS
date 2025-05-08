@@ -124,13 +124,13 @@ class ScheduleScreen(Screen):
         username = App.get_running_app().current_user
 
         availability = {
-            "monday": self._get_times(mon_morn, mon_aft, mon_eve),
-            "tuesday": self._get_times(tue_morn, tue_aft, tue_eve),
-            "wednesday": self._get_times(wed_morn, wed_aft, wed_eve),
-            "thursday": self._get_times(thu_morn, thu_aft, thu_eve),
-            "friday": self._get_times(fri_morn, fri_aft, fri_eve),
-            "saturday": self._get_times(sat_morn, sat_aft, sat_eve),
-            "sunday": self._get_times(sun_morn, sun_aft, sun_eve)
+            "Lunes": self._get_times(mon_morn, mon_aft, mon_eve),
+            "Martes": self._get_times(tue_morn, tue_aft, tue_eve),
+            "Miercoles": self._get_times(wed_morn, wed_aft, wed_eve),
+            "Jueves": self._get_times(thu_morn, thu_aft, thu_eve),
+            "Viernes": self._get_times(fri_morn, fri_aft, fri_eve),
+            "Sabado": self._get_times(sat_morn, sat_aft, sat_eve),
+            "Domingo": self._get_times(sun_morn, sun_aft, sun_eve)
         }
 
         try:
@@ -148,7 +148,7 @@ class ScheduleScreen(Screen):
 
         with open("availability.json", "w") as file:
             json.dump(data, file, indent=4)
-            
+
         self.show_popup("¡Tu disponibilidad ha sido registrada con éxito!")
         print(f"[INFO] Disponibilidad de '{username}' guardada correctamente.")
         self.manager.current = "login_success"  # o a una pantalla de confirmación
@@ -156,11 +156,11 @@ class ScheduleScreen(Screen):
     def _get_times(self, morning, afternoon, evening):
         result = []
         if morning:
-            result.append("morning")
+            result.append("Mañana")
         if afternoon:
-            result.append("afternoon")
+            result.append("Tarde")
         if evening:
-            result.append("evening")
+            result.append("Noche")
         return result
 
 class ImageButton(ButtonBehavior, HoverBehavior, Image):

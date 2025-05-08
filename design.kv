@@ -7,17 +7,17 @@
 			spacing: 20,20
 			Label:
 			    font_size:"20sp"
-				text:"User Login"
+				text:"Iniciar Sesión"
 			TextInput:
 				id:username
-				hint_text:"Username"
+				hint_text:"Usuario"
 			TextInput:
 				id:password
 				password:True
-				hint_text:"Password"
+				hint_text:"Contraseña"
 			RelativeLayout:
 				Button:
-					text:"Login"
+					text:"Ingresar"
 					on_press:root.login(root.ids.username.text,root.ids.password.text)
 					size_hint:0.3,0.5
 					pos_hint:{'center_x':0.5,'center_y':0.6}
@@ -77,7 +77,7 @@
             text: "Ir a encuesta de horarios"
             on_press: root.manager.current = "schedule_screen"
 		Button:
-    		text: "Ver mejor horario votado"
+    		text: "Ver mejor horario votado (Grafico)"
     		# on_press: root.show_best_time() Anterior
 			on_press: root.manager.current = "results_screen"
         Button:
@@ -104,7 +104,7 @@
 			size_hint:0.3,0.5
 		RelativeLayout:
 			Button:
-				text:"Submit"
+				text:"Registrarse"
 				on_press: root.add_user(root.ids.username.text,root.ids.password.text)
 				size_hint:0.3,0.5
 				pos_hint:{'center_x':0.5,'center_y':0.6}
@@ -113,9 +113,9 @@
 	GridLayout:
 		cols: 1
 		Label:
-			text:"Login successful"
+			text:"Registro Completado!!!"
 		Button:
-			text:"Go to login page"
+			text:"Ir a Iniciar Sesión"
 			on_press: root.login_page()
 
 <ScheduleScreen>:
@@ -134,17 +134,17 @@
                 spacing: 5
 
                 Label: 
-					text: "Day"
+					text: "Dia"
                 Label: 
-					text: "Morning"
+					text: "Manaña"
                 Label: 
-					text: "Afternoon"
+					text: "Tarde"
                 Label: 
-					text: "Evening"
+					text: "Noche"
 
                 # Repeat for all 7 days
                 Label: 
-					text: "Monday"
+					text: "Lunes"
                 CheckBox: 
 					id: mon_morn
                 CheckBox: 
@@ -153,7 +153,7 @@
 					id: mon_eve
 
                 Label: 
-					text: "Tuesday"
+					text: "Martes"
                 CheckBox: 
 					id: tue_morn
                 CheckBox: 
@@ -162,7 +162,7 @@
 					id: tue_eve
 
                 Label: 
-					text: "Wednesday"
+					text: "Miercoles"
                 CheckBox: 
 					id: wed_morn
                 CheckBox: 
@@ -171,7 +171,7 @@
 					id: wed_eve
 
                 Label: 
-					text: "Thursday"
+					text: "Jueves"
                 CheckBox: 
 					id: thu_morn
                 CheckBox: 
@@ -180,7 +180,7 @@
 					id: thu_eve
 
                 Label: 
-					text: "Friday"
+					text: "Viernes"
                 CheckBox: 
 					id: fri_morn
                 CheckBox: 
@@ -189,7 +189,7 @@
 					id: fri_eve
 
                 Label: 
-					text: "Saturday"
+					text: "Sabado"
                 CheckBox: 
 					id: sat_morn
                 CheckBox: 
@@ -198,7 +198,7 @@
 					id: sat_eve
 
                 Label: 
-					text: "Sunday"
+					text: "Domingo"
                 CheckBox: 
 					id: sun_morn
                 CheckBox: 
