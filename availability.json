@@ -1,0 +1,32 @@
+{
+    "anto": {
+        "monday": [
+            "morning"
+        ],
+        "tuesday": [],
+        "wednesday": [
+            "afternoon"
+        ],
+        "thursday": [
+            "evening"
+        ],
+        "friday": [],
+        "saturday": [],
+        "sunday": []
+    },
+    "lala": {
+        "monday": [],
+        "tuesday": [],
+        "wednesday": [
+            "morning"
+        ],
+        "thursday": [
+            "afternoon"
+        ],
+        "friday": [
+            "afternoon"
+        ],
+        "saturday": [],
+        "sunday": []
+    }
+}

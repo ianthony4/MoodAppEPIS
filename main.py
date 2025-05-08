@@ -12,8 +12,7 @@ from pathlib import Path
 # For button-hover feature
 from hoverable import HoverBehavior
 
-# Load Kivy design
-Builder.load_file("design.kv")
+
 
 class LoginScreen(Screen):
     def sign_up(self):
@@ -23,14 +22,16 @@ class LoginScreen(Screen):
         try:
             with open("users.json", "r") as file:
                 users = json.load(file)
+
         except (FileNotFoundError, JSONDecodeError):
-            self.ids.login_wrong.text = "User data not found or corrupted"
+            self.ids.login_wrong.text = "No se encuentra el usuario"
             return
 
         if uname in users and users[uname]['password'] == pwd:
+            App.get_running_app().current_user = uname
             self.manager.current = "login_success"
         else:
-            self.ids.login_wrong.text = 'Invalid username or password'
+            self.ids.login_wrong.text = 'Usuario o Contraseña Invalido'
 
 class LoginSuccessScreen(Screen):
     def logout(self):
@@ -46,7 +47,33 @@ class LoginSuccessScreen(Screen):
                 quotes = file.readlines()
             self.ids.quote.text = random.choice(quotes).strip()
         else:
-            self.ids.quote.text = "Try another feeling"
+            self.ids.quote.text = "Prueba otra emocion"
+    def show_best_time(self):
+        try:
+            with open("availability.json", "r") as file:
+                data = json.load(file)
+        except (FileNotFoundError, JSONDecodeError):
+            self.ids.quote.text = "No availability data found."
+            return
+
+        counter = {}
+
+        # Contar votos
+        for user, schedule in data.items():
+            for day, times in schedule.items():
+                for time in times:
+                    key = f"{day} {time}"
+                    counter[key] = counter.get(key, 0) + 1
+
+        if not counter:
+            self.ids.quote.text = "No availabilities submitted yet."
+            return
+
+        # Obtener la opción más votada
+        best_option = max(counter.items(), key=lambda x: x[1])
+        best_time, votes = best_option
+
+        self.ids.quote.text = f"Mejor opción: {best_time.capitalize()} ({votes} votos)"
 
 class SignupScreen(Screen):
     def add_user(self, uname, pwd):
@@ -72,13 +99,67 @@ class SignupSuccessScreen(Screen):
         self.manager.transition.direction = 'right'
         self.manager.current = "login_screen"
 
+class ScheduleScreen(Screen):
+    
+    def save_availability(self,
+                          mon_morn, mon_aft, mon_eve,
+                          tue_morn, tue_aft, tue_eve,
+                          wed_morn, wed_aft, wed_eve,
+                          thu_morn, thu_aft, thu_eve,
+                          fri_morn, fri_aft, fri_eve,
+                          sat_morn, sat_aft, sat_eve,
+                          sun_morn, sun_aft, sun_eve):
+        
+        username = App.get_running_app().current_user
+
+        availability = {
+            "monday": self._get_times(mon_morn, mon_aft, mon_eve),
+            "tuesday": self._get_times(tue_morn, tue_aft, tue_eve),
+            "wednesday": self._get_times(wed_morn, wed_aft, wed_eve),
+            "thursday": self._get_times(thu_morn, thu_aft, thu_eve),
+            "friday": self._get_times(fri_morn, fri_aft, fri_eve),
+            "saturday": self._get_times(sat_morn, sat_aft, sat_eve),
+            "sunday": self._get_times(sun_morn, sun_aft, sun_eve)
+        }
+
+        try:
+            with open("availability.json", "r") as file:
+                data = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = {}
+
+        if username in data:
+            print(f"[INFO] Usuario '{username}' ya ha votado.")
+            return 
+
+        data[username] = availability
+
+        with open("availability.json", "w") as file:
+            json.dump(data, file, indent=4)
+
+        print(f"[INFO] Disponibilidad de '{username}' guardada correctamente.")
+        self.manager.current = "login_success"  # o a una pantalla de confirmación
+
+    def _get_times(self, morning, afternoon, evening):
+        result = []
+        if morning:
+            result.append("morning")
+        if afternoon:
+            result.append("afternoon")
+        if evening:
+            result.append("evening")
+        return result
+
 class ImageButton(ButtonBehavior, HoverBehavior, Image):
     pass
+# Load Kivy design
+Builder.load_file("design.kv")
 
 class RootWidget(ScreenManager):
     pass
 
 class MainApp(App):
+    current_user = None
     def build(self):
         return RootWidget()
 

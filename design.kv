@@ -43,29 +43,47 @@
 				on_press: root.sign_up()
 
 <LoginSuccessScreen>:
-	GridLayout:
-		padding:30,30
-		spacing:30,30
-		cols: 1
-		ImageButton:
-			source:'files/logout_hover.png' if self.hovered else 'files/logout_nothover.png'
-			size_hint:0.35,0.35
-			on_press: root.logout()
+
+	BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+
+        Label:
+            text: "¡Bienvenido!"
+            font_size: 24
+
 		Label:
-			text:"How do you feel?"
-		TextInput:
-			id:feeling
-			hint_text:"Happy,sad,unloved etc."
+            id: quote
+            text: ""
+            font_size: 16
+            size_hint_y: None
+            height: self.texture_size[1] + 20
+			halign: "center"
+    		valign: "middle"
+			text_size: self.width, None
+            color: 1, 1, 1, 1 
+		
+        TextInput:
+            id: feel_input
+            hint_text: "¿Cómo te sientes hoy? (feliz/triste/desamparado)"
+            size_hint_y: None
+            height: 40
+
+        Button:
+            text: "Mostrar frase"
+            on_press: root.display_quote(feel_input.text)
+        Button:
+            text: "Ir a encuesta de horarios"
+            on_press: root.manager.current = "schedule_screen"
 		Button:
-			text:"Enlighten me"
-			on_press:root.display_quote(root.ids.feeling.text)
-		ScrollView:
-			Label:
-			    id:quote
-				text:""
-				text_size:self.width,None
-				size_hint_y:None
-				height:self.texture_size[1]
+    		text: "Ver mejor horario votado"
+    		on_press: root.show_best_time()
+        Button:
+            text: "Cerrar sesión"
+            on_press: root.logout()
+		
+
 				
 <SignupScreen>:
 	GridLayout:
@@ -99,6 +117,106 @@
 			text:"Go to login page"
 			on_press: root.login_page()
 
+<ScheduleScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+
+        ScrollView:
+            GridLayout:
+                id: schedule_grid
+                cols: 4
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: 40
+                spacing: 5
+
+                Label: 
+					text: "Day"
+                Label: 
+					text: "Morning"
+                Label: 
+					text: "Afternoon"
+                Label: 
+					text: "Evening"
+
+                # Repeat for all 7 days
+                Label: 
+					text: "Monday"
+                CheckBox: 
+					id: mon_morn
+                CheckBox: 
+					id: mon_aft
+                CheckBox: 
+					id: mon_eve
+
+                Label: 
+					text: "Tuesday"
+                CheckBox: 
+					id: tue_morn
+                CheckBox: 
+					id: tue_aft
+                CheckBox: 
+					id: tue_eve
+
+                Label: 
+					text: "Wednesday"
+                CheckBox: 
+					id: wed_morn
+                CheckBox: 
+					id: wed_aft
+                CheckBox: 
+					id: wed_eve
+
+                Label: 
+					text: "Thursday"
+                CheckBox: 
+					id: thu_morn
+                CheckBox: 
+					id: thu_aft
+                CheckBox: 
+					id: thu_eve
+
+                Label: 
+					text: "Friday"
+                CheckBox: 
+					id: fri_morn
+                CheckBox: 
+					id: fri_aft
+                CheckBox: 
+					id: fri_eve
+
+                Label: 
+					text: "Saturday"
+                CheckBox: 
+					id: sat_morn
+                CheckBox: 
+					id: sat_aft
+                CheckBox: 
+					id: sat_eve
+
+                Label: 
+					text: "Sunday"
+                CheckBox: 
+					id: sun_morn
+                CheckBox: 
+					id: sun_aft
+                CheckBox: 
+					id: sun_eve
+
+        Button:
+            text: "Enviar disponibilidad"
+            size_hint_y: None
+            height: 50
+            on_press: root.save_availability(mon_morn.active, mon_aft.active, mon_eve.active, tue_morn.active, tue_aft.active, tue_eve.active, wed_morn.active, wed_aft.active, wed_eve.active, thu_morn.active, thu_aft.active, thu_eve.active, fri_morn.active, fri_aft.active, fri_eve.active, sat_morn.active, sat_aft.active, sat_eve.active, sun_morn.active, sun_aft.active, sun_eve.active)
+		Button:
+            text: "Volver al inicio"
+            size_hint_y: None
+            height: 40
+            on_press:
+                root.manager.current = "login_success"
+
 
 <RootWidget>:
 	LoginScreen:
@@ -109,3 +227,6 @@
 		name:"sign_up_screen"
 	SignupSuccessScreen:
 		name:"sign_up_success"
+	ScheduleScreen:
+    	name: "schedule_screen"
+
