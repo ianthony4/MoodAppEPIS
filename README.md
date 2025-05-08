@@ -1,3 +1,14 @@
+# Nuevas funcionalidades agregadas
+
+- Registro único de disponibilidad para reunión semanal, por usuario.
+- Detección y bloqueo de votos duplicados.
+- Mensajes emergentes visuales (popups) para confirmar votación o advertir errores.
+- Visualización de resultados en gráfico de barras usando Kivy Garden Matplotlib.
+- Traducción completa de etiquetas y resultados al español.
+- Las frases motivacionales estan centradas y con ajuste automático de tamaño.
+
+---
+
 # Mobile application using python.
 
 This project demonstrates a mobile application. It has
